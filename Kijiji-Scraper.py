@@ -2,7 +2,7 @@
 
 
 # Place url, linking to ad list, with desired search filters here.
-# e.g: http://www.kijiji.ca/b-cars-trucks/calgary/convertible__coupe__hatchback__other+body+type__sedan__wagon-mazda-mx5miata/c174l1700199a138a54a1000054
+# e.g. http://www.kijiji.ca/b-cars-trucks/calgary/convertible__coupe__hatchback__other+body+type__sedan__wagon-mazda-mx5miata/c174l1700199a138a54a1000054
 url_to_scrape = ""
 
 # Set the delay in (s) that the programs waits before scraping again.
