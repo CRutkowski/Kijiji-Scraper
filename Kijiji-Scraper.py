@@ -67,6 +67,10 @@ def WriteAds(ad_dict,filename): # Writes ads to given file
 
 def ReadAds(filename): # Reads given file and creates a dict of ads in file
    import ast
+   import os.path
+   if not os.path.isfile(filename): # If the file doesn't exist, it makes it.
+      file = open(filename,'w')
+      file.close()   
 
    ad_dict = {}
    file = open(filename,'r')
@@ -157,7 +161,7 @@ def main(old_ad_dict): # Main function, brings it all together.
             log('[Okay] New ad found! Ad id: '+ ad_id)
             ad_dict[ad_id] = ParseAd(ad)
                
-   if ad_dict != {}:
+   if ad_dict != {}: # If dict not emtpy, write ads to text file and send email.
       WriteAds(ad_dict,filename)
       MailAd(ad_dict)
       try:
@@ -170,5 +174,7 @@ def main(old_ad_dict): # Main function, brings it all together.
       
 if __name__ == "__main__":
    old_ad_dict = ReadAds(filename)
-   log("[Okay] Ad database succesfully loaded.")   
+   log("[Okay] Ad database succesfully loaded.")
+   file = open('log.txt','w') # Create/Empty log file
+   file.close()   
    main(old_ad_dict)
