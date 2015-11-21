@@ -12,4 +12,5 @@ To configure the script:
 -Set the 'scrape_delay' variable to them time in seconds before re-scraping. (default = 600)
 
 -Replace SENDER_EMAIL, SENDER_EMAIL_PASSWORD, RECEIVER_EMAIL fields in the 'MailAd' function with your email info.
+
     -If your using gmail, you'll have to go to 'My Account>Sign in & security>Connected apps & sites' then turn "Allow less secure apps" to "On".
