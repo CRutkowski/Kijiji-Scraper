@@ -36,9 +36,15 @@ def ParseAd(html): # Parses ad html trees and sorts relevant data into a diction
       log('[Error] Unable to parse Description data.')
          
    try:
-      kms, trans = details.text.split('|')
-      ad_info["Mileage"] = kms.strip()
-      ad_info["Trans"] = trans.strip()
+      checklist = ['Automatic','Manual','Other']
+      details = details.text.split('|')
+      for item in details:
+         if item == '\n':
+            pass
+         if 'km' in item:
+            ad_info["Mileage"] = item.strip()
+         if item.strip() in checklist:
+            ad_info["Trans"] = item.strip()
    except:
       log('[Error] Unable to parse Mileage/Trans data.')      
       
@@ -113,8 +119,12 @@ def MailAd(ad_dict): # Sends an email with a link and info of new ads
          body = body + ad_dict[ad_id]['Title'] + '\n'
          body = body + ad_dict[ad_id]['Url'] + '\n\n'
          body = body + ad_dict[ad_id]['Description'] + '\n\n'
-         body = body + ad_dict[ad_id]['Mileage'] + '\t\t' + ad_dict[ad_id]['Trans'] + '\n'
-         body = body + ad_dict[ad_id]['Price'] + '\n\n\n'
+         if 'Mileage' in ad_dict[ad_id]:
+            body = body + ad_dict[ad_id]['Mileage'] + '\t\t' + ad_dict[ad_id]['Trans'] + '\n'
+         if 'Price' in ad_dict[ad_id]:
+            body = body + ad_dict[ad_id]['Price']
+         body = body + '\n\n\n'
+      body = body +  'This is an automated message.\nPlease do not reply to this message.'
    except:
       log('[Error] Unable to create body for email message')
       
@@ -148,6 +158,7 @@ def main(old_ad_dict): # Main function, brings it all together.
    except:
       log("[Error] Unable to load html data from: " + url_to_scrape)
    soup = BeautifulSoup(page.content,"html.parser")
+   page = None
 
    kijiji_ads = soup.find_all("table",{"class":"regular-ad"}) # Finds all ad trees in page html.
 
