@@ -49,12 +49,12 @@ def ParseAd(html):  # Parses ad html trees and sorts relevant data into a dictio
         log('[Error] Unable to parse Mileage/Trans data.')
 
     try:
-        ad_info["Date"] = html.find_all('td', {"class": "posted"})[0].text.strip()
+        ad_info["Date"] = html.find_all('span ', {"class": "date-posted"})[0].text.strip()
     except:
         log('[Error] Unable to parse Date data.')
 
     try:
-        ad_info["Price"] = html.find_all('td', {"class": "price"})[0].text.strip()
+        ad_info["Price"] = html.find_all('div ', {"class": "price"})[0].text.strip()
     except:
         log('[Error] Unable to parse Price data.')
 
@@ -107,15 +107,15 @@ def MailAd(ad_dict):  # Sends an email with a link and info of new ads
     import smtplib
     from email.mime.text import MIMEText
 
-    sender = 'SENDER_EMAIL'
-    passwd = 'SENDER_EMAIL_PASSWORD'
-    receiver = 'RECEIVER_EMAIL'
+    sender = 'andrecooke@hotmail.com'
+    passwd = '********'
+    receiver = 'andrecooke@hotmail.com'
 
     count = len(ad_dict)
     if count > 1:
-        subject = str(count) + ' New Ads Found!'
+        subject = str(count) + ' Nouvelle annonces trouvés!'
     if count == 1:
-        subject = '1 New Ad Found!'
+        subject = 'Une nouvelle annonce trouvé'
 
     body = ''
     try:
@@ -125,8 +125,8 @@ def MailAd(ad_dict):  # Sends an email with a link and info of new ads
             body = body + ad_dict[ad_id]['Description'] + '\n\n'
             if 'Mileage' in ad_dict[ad_id]:
                 body = body + ad_dict[ad_id]['Mileage'] + '\t\t' + ad_dict[ad_id]['Trans'] + '\n'
-            if 'Price' in ad_dict[ad_id]:
-                body = body + ad_dict[ad_id]['Price']
+            if 'Prix' in ad_dict[ad_id]:
+                body = body + ad_dict[ad_id]['Prix']
             body = body + '\n\n\n'
         body = body + 'This is an automated message.\nPlease do not reply to this message.'
     except:
@@ -138,7 +138,7 @@ def MailAd(ad_dict):  # Sends an email with a link and info of new ads
     msg['To'] = receiver
 
     try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP('smtp.live.com', 587)
         server.ehlo()
         server.starttls()
         server.ehlo()
@@ -163,18 +163,16 @@ def main(old_ad_dict):  # Main function, brings it all together.
     except:
         log("[Error] Unable to load html data from: " + url_to_scrape)
     soup = BeautifulSoup(page.content, "html.parser")
-    print(soup.title)
-    for link in soup.find_all('div'):
-        if link.get('data-ad-id') is not None:
-            print(link.get('data-ad-id'))
-            print(link.get('data-vip-url'))
+#    print(soup.title)
+#    for link in soup.find_all('div'):
+#        if link.get('data-ad-id') is not None:
+#            print(link.get('data-ad-id'))
+#            print(link.get('data-vip-url'))
 
 
     page = None
 
-    kijiji_ads = soup.find_all("table", {"class": "regular-ad"})  # Finds all ad trees in page html.
-
-
+    kijiji_ads = soup.find_all("div", {"class": "regular-ad"})  # Finds all ad trees in page html.
 
     ad_dict = {}
 
