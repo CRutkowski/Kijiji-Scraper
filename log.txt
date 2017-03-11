@@ -1,48 +1,15 @@
-2017-03-10 12:08:23.896444
+2017-03-11 07:51:37.002084
 [Okay] Retrieved HTML data from: http://www.kijiji.ca/b-canot-kayak-paddle-board/quebec/kayak/k0c329l9001
 
-2017-03-10 12:08:24.010467
-[Okay] New ad found! Ad id: 1245536093
+2017-03-11 07:51:37.146103
+[Okay] New ad found! Ad id: 1243823047
 
-2017-03-10 12:08:24.013467
-[Error] Unable to parse Description data.
+2017-03-11 07:51:37.154104
+[Okay] Ad 1243823047 written to database.
 
-2017-03-10 12:08:24.015468
-[Error] Unable to parse Mileage/Trans data.
-
-2017-03-10 12:08:24.017468
-[Error] Unable to parse Date data.
-
-2017-03-10 12:08:24.019468
-[Error] Unable to parse Price data.
-
-2017-03-10 12:08:24.030471
-[Okay] New ad found! Ad id: 1243823668
-
-2017-03-10 12:08:24.032471
-[Error] Unable to parse Description data.
-
-2017-03-10 12:08:24.034471
-[Error] Unable to parse Mileage/Trans data.
-
-2017-03-10 12:08:24.036472
-[Error] Unable to parse Date data.
-
-2017-03-10 12:08:24.039472
-[Error] Unable to parse Price data.
-
-2017-03-10 12:08:24.045474
-[Okay] Ad 1245536093 written to database.
-
-2017-03-10 12:08:24.047474
-[Okay] Ad 1243823668 written to database.
-
-2017-03-10 12:08:24.058476
-[Error] Unable to create body for email message
-
-2017-03-10 12:08:28.704405
+2017-03-11 07:51:41.029160
 [Okay] Email message successfully delivered.
 
-2017-03-10 12:08:28.709406
+2017-03-11 07:51:41.031160
 [Okay] Database succesfully reloaded.
 
