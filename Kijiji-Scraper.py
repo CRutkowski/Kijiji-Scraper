@@ -138,7 +138,7 @@ def MailAd(ad_dict):  # Sends an email with a link and info of new ads
     except:
         log('[Error] Unable to login to email server.')
     try:
-        server.send_message(msg)
+        server.sendmail(msg['From'], msg['To'], msg.as_string())
         server.quit()
         log('[Okay] Email message successfully delivered.')
     except:
