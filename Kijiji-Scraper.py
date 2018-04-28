@@ -19,6 +19,12 @@ def ParseAd(html):  # Parses ad html trees and sorts relevant data into a dictio
         ad_info["Title"] = html.find('a', {"class": "title"}).text.strip()
     except:
         print('[Error] Unable to parse Title data.')
+        
+    try:
+        ad_info["Image"] = str(html.find('img'))
+        print(ad_info["Image"])
+    except:
+        print('[Error] Unable to parse Image data')
 
     try:
         ad_info["Url"] = 'http://www.kijiji.ca' + html.get("data-vip-url")
@@ -92,9 +98,9 @@ def MailAd(ad_dict):  # Sends an email with a link and info of new ads
     import smtplib
     from email.mime.text import MIMEText
 
-    sender = 'email@example.com'
-    passwd = 'password'
-    receiver = 'email@example.com'
+    sender = 'sender email'
+    passwd = 'sender email password'
+    receiver = 'receiving email'
 
     count = len(ad_dict)
     if count > 1:
@@ -102,21 +108,22 @@ def MailAd(ad_dict):  # Sends an email with a link and info of new ads
     if count == 1:
         subject = 'One New Ad Found!'
 
-    body = ''
+    body = '<!DOCTYPE html> \n<html> \n<body>'
     try:
         for ad_id in ad_dict:
-            body += ad_dict[ad_id]['Title'] + ' - ' + ad_dict[ad_id]['Location']
-            body += ' - ' + ad_dict[ad_id]['Date'] + '\n'
-            body += ad_dict[ad_id]['Url'] + '\n\n'
-            body += ad_dict[ad_id]['Description'] + '\n'
-            body += ad_dict[ad_id]['Details'] + '\n' + ad_dict[ad_id]['Price'] + '\n\n\n'
+            body += '<p><b>' + ad_dict[ad_id]['Title'] + '</b>' + ' - ' + ad_dict[ad_id]['Location']
+            body += ' - ' + ad_dict[ad_id]['Date'] + '<br /></p>'
+            body += '<a href="' + ad_dict[ad_id]['Url'] + '">'
+            body += ad_dict[ad_id]['Image'] + '</a>'
+            body += '<p>' + ad_dict[ad_id]['Description'] + '<br />'
+            body += ad_dict[ad_id]['Details'] + '<br />' + ad_dict[ad_id]['Price'] + '<br /><br /><br /><br /></p>'
     except:
-        body += ad_dict[ad_id]['Title'] + '\n'
-        body += ad_dict[ad_id]['Url'] + '\n\n'
+        body +='<p>' +  ad_dict[ad_id]['Title'] + '<br />'
+        body += ad_dict[ad_id]['Url'] + '<br /><br />' + '</p>'
         print('[Error] Unable to create body for email message')
 
-    body += 'This is an automated message.\nPlease do not reply to this message.'
-    msg = MIMEText(body)
+    body += '<p>This is an automated message.\nPlease do not reply to this message.</p>'
+    msg = MIMEText(body, 'html')
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = receiver
