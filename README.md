@@ -1,7 +1,6 @@
 # Kijiji-Scraper 2.5
 Python script that scrapes Kijiji ad information and sends out an email
 when a new ad is found.
-It's designed to be run in the background (Pythonw).
 
 Dependencies: requests and BeautifulSoup
 
