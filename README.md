@@ -1,10 +1,17 @@
-# Kijiji-Scraper 2.0
+# Kijiji-Scraper 2.5 (README is currently oudated)
 Python script that scrapes Kijiji ad information and sends out an email
 when a new ad is found.
 It's designed to be run in the background (Pythonw).
 
 Dependencies: requests and BeautifulSoup
 
+ Replace SENDER_EMAIL, SENDER_EMAIL_PASSWORD, RECEIVER_EMAIL fields in the 'MailAd' function with your email info.
+ Run the script with `-h` arg for description of command line args i.e. `Kijiji-Scraper.py -h` 
+
+
+
+
+Ignore below - Will update soon
 To configure the script:
 -Set the 'url_to_scrape' variable to the url of the Kijiji ad page you want to scrape.
     e.g. 'http://www.kijiji.ca/b-cars-trucks/calgary/convertible__coupe__hatchback__other+body+type__sedan__wagon-mazda-mx5miata/c174l1700199a138a54a1000054'
