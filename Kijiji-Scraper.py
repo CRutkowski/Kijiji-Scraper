@@ -22,7 +22,6 @@ def ParseAd(html):  # Parses ad html trees and sorts relevant data into a dictio
         
     try:
         ad_info["Image"] = str(html.find('img'))
-        print(ad_info["Image"])
     except:
         print('[Error] Unable to parse Image data')
 
@@ -94,7 +93,7 @@ def ReadAds(filename):  # Reads given file and creates a dict of ads in file
     return ad_dict
 
 
-def MailAd(ad_dict):  # Sends an email with a link and info of new ads
+def MailAd(ad_dict, title):  # Sends an email with a link and info of new ads
     import smtplib
     from email.mime.text import MIMEText
 
@@ -104,9 +103,9 @@ def MailAd(ad_dict):  # Sends an email with a link and info of new ads
 
     count = len(ad_dict)
     if count > 1:
-        subject = str(count) + ' New Ads Found!'
+        subject = str(count) + ' New ' + title + ' Ads Found!'
     if count == 1:
-        subject = 'One New Ad Found!'
+        subject = 'One New ' + title + ' Ad Found!'
 
     body = '<!DOCTYPE html> \n<html> \n<body>'
     try:
@@ -154,6 +153,9 @@ def scrape(url, old_ad_dict, exclude_list, filename):  # Main function, brings i
 
     soup = BeautifulSoup(page.content, "html.parser")
 
+    title = soup.find('div', {'class': 'message'}).find('strong').text.strip('"')
+    title = toUpper(title)
+    print(title)
     kijiji_ads = soup.find_all("div", {"class": "regular-ad"})  # Finds all ad trees in page html.
 
     ad_dict = {}
@@ -170,13 +172,24 @@ def scrape(url, old_ad_dict, exclude_list, filename):  # Main function, brings i
 
     if ad_dict != {}:  # If dict not emtpy, write ads to text file and send email.
         WriteAds(ad_dict, filename)
-        MailAd(ad_dict)
+        MailAd(ad_dict, title)
             
 def toLower(input_list):
     output_list = list()
     for word in input_list:
         output_list.append(word.lower())
     return output_list
+
+def toUpper(title):
+    new_title = list()
+    title = title.split()
+    for word in title:
+        new_word = ''
+        new_word += word[0].upper()
+        if len(word) > 1:
+            new_word += word[1:]
+        new_title.append(new_word)
+    return ' '.join(new_title)
 
 def main():
     args = sys.argv
