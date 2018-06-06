@@ -218,7 +218,7 @@ def toUpper(title): # Makes the first letter of every word upper-case
 def main(): # Main function, handles command line arguments and calls other functions for parsing ads
     args = sys.argv
     if args[1] == '-h' or args[1] == '--help': # Print script usage help
-        print('Usage: Kijiji-Scraper.py URL [-f] [-e]\n')
+        print('Usage: Kijiji-Scraper.py URL [-f] [-e] [-s]\n')
         print('Positional arguments:')
         print(' URL\t\tUrl to scrape for ads\n')
         print('Optional arguments:')
