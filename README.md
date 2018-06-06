@@ -1,5 +1,5 @@
 # Kijiji-Scraper 2.5
-## Python script that scrapes Kijiji ad information and sends out an email when a new ad is found.
+### Python script that scrapes Kijiji ad information and sends out an email when a new ad is found.
 
 
  **Replace SENDER_EMAIL, SENDER_EMAIL_PASSWORD, RECEIVER_EMAIL fields in the 'MailAd' function with your email info.**
