@@ -8,6 +8,7 @@ import time
 import sys
 import os
 
+skip_flag = false
 
 def ParseAd(html):  # Parses ad html trees and sorts relevant data into a dictionary
     ad_info = {}
@@ -194,7 +195,8 @@ def scrape(url, old_ad_dict, exclude_list, filename):  # Pulls page data from a 
 
     if ad_dict != {}:  # If dict not emtpy, write ads to text file and send email.
         WriteAds(ad_dict, filename) # Save ads to file
-        MailAd(ad_dict, email_title) # Send out email with new ads
+        if not skip_flag: # if skip flag is set do not send out email
+            MailAd(ad_dict, email_title) # Send out email with new ads
             
 def toLower(input_list): # Rturns a given list of words to lower-case words
     output_list = list()
@@ -222,7 +224,8 @@ def main(): # Main function, handles command line arguments and calls other func
         print('Optional arguments:')
         print(' -h, --help  show this help message and exit')
         print(' -f\t\tfilename to store ads in (default name is the url)')
-        print(' -e\t\tword that will exclude an add if its in the title (can be a single word or multiple words seperated by spaces')
+        print(' -e\t\tword that will exclude an ad if its in the title (can be a single word or multiple words seperated by spaces')
+        print(' -s\t\tflag that causes the program to skip sending an email. Useful if you want to index ads but not be notified of them.
     else:
         url_to_scrape = args[1]
         if '-f' in args:
@@ -231,6 +234,9 @@ def main(): # Main function, handles command line arguments and calls other func
             args.remove('-f')
         else:
             filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), url_to_scrape)
+        if '-s' in args:
+            skip_flag = true
+            args.remove('-s')
         if '-e' in args:
             exclude_list = args[args.index('-e') + 1:]
         else:
