@@ -8,7 +8,6 @@ import time
 import sys
 import os
 
-skip_flag = False
 
 def ParseAd(html):  # Parses ad html trees and sorts relevant data into a dictionary
     ad_info = {}
@@ -64,14 +63,14 @@ def ParseAd(html):  # Parses ad html trees and sorts relevant data into a dictio
 
 
 def WriteAds(ad_dict, filename):  # Writes ads from given dictionary to given file
-    try:
-        file = open(filename, 'a')
-        for ad_id in ad_dict:
-            file.write(ad_id)
-            file.write(str(ad_dict[ad_id]) + "\n")
-        file.close()
-    except:
-        print('[Error] Unable to write ad(s) to file.')
+    #try:
+	file = open(filename, 'ab')
+	for ad_id in ad_dict:
+		file.write(ad_id.encode('utf-8'))
+		file.write((str(ad_dict[ad_id]) + "\n").encode('utf-8'))
+	file.close()
+    #except:
+        #print('[Error] Unable to write ad(s) to file.')
 
 
 def ReadAds(filename):  # Reads given file and creates a dict of ads in file
@@ -81,12 +80,12 @@ def ReadAds(filename):  # Reads given file and creates a dict of ads in file
         file.close()
 
     ad_dict = {}
-    with open(filename, 'r') as file:
+    with open(filename, 'rb') as file:
         for line in file:
             if line.strip() != '':
-                index = line.find('{')
-                ad_id = line[:index]
-                dictionary = line[index:]
+                index = line.find('{'.encode('utf-8'))
+                ad_id = line[:index].decode('utf-8')
+                dictionary = line[index:].decode('utf-8')
                 dictionary = ast.literal_eval(dictionary)
                 ad_dict[ad_id] = dictionary
     return ad_dict
@@ -152,7 +151,7 @@ def MailAd(ad_dict, email_title):  # Sends an email with a link and info of new 
         print('[Error] Unable to send message.')
 
 
-def scrape(url, old_ad_dict, exclude_list, filename):  # Pulls page data from a given kijiji url and finds all ads on each page
+def scrape(url, old_ad_dict, exclude_list, filename, skip_flag):  # Pulls page data from a given kijiji url and finds all ads on each page
     # Initialize variables for loop
     email_title = None
     ad_dict = {}
@@ -228,6 +227,7 @@ def main(): # Main function, handles command line arguments and calls other func
         print(' -s\t\tflag that causes the program to skip sending an email. Useful if you want to index ads but not be notified of them')
     else:
         url_to_scrape = args[1]
+        skip_flag = False
         if '-f' in args:
             filename = args.pop(args.index('-f') + 1)
             filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
@@ -244,7 +244,7 @@ def main(): # Main function, handles command line arguments and calls other func
         
     old_ad_dict = ReadAds(filename)
     print("[Okay] Ad database succesfully loaded.")
-    scrape(url_to_scrape, old_ad_dict, exclude_list, filename)
+    scrape(url_to_scrape, old_ad_dict, exclude_list, filename, skip_flag)
 
 if __name__ == "__main__":
     main()
