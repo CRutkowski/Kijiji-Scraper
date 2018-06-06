@@ -1,5 +1,6 @@
 # Kijiji-Scraper 2.5
-### Python script that scrapes Kijiji ad information and sends out an email when a new ad is found.
+## Python script that scrapes Kijiji ad information and sends out an email when a new ad is found.
+
 
  **Replace SENDER_EMAIL, SENDER_EMAIL_PASSWORD, RECEIVER_EMAIL fields in the 'MailAd' function with your email info.**
  
@@ -11,7 +12,7 @@
  
  - `URL` the Kijiji URL to scrape for ads i.e. `https://www.kijiji.ca/b-calgary/kayak/k0l1700199?price=__1000` Any filters you use on Kijiji are part of the URL so they will apply to the script.
  
- - `-f` filename to store ads in i.e. `-f ads.txt` will stire the ad ids in 'ads.txt'. The default filename is the URL.
+ - `-f` filename to store ads in i.e. `-f ads.txt` will store the ad ids in 'ads.txt'. The default filename is the URL.
  
  - `-e` words to exclude ads, can be one word or many seperated by spaces. `-e wanted used` will exclude any ads with the word wanted or used in the title.
  
@@ -30,3 +31,31 @@
 `pip install requests`
 
 `pip install bs4`
+
+**How to run the script on set intervals:**
+
+Windows:
+
+The windows `Task Scheduler` can be used to have the script run at set intervals.
+
+1. Create a new task
+   - Fill in name and description
+
+2. Add a trigger
+   - Under `Settings` select `Daily`
+   - Set `Repeat task every:` to your desired interval i.e. 5 mins to run the script every 5 mins
+   - Set `for a duration of:` to indefinitely
+   
+3. Add an action
+   - Action is Start a program
+   - Set Program/script to the location of your python executable i.e. `C:\Users\{username}\AppData\Local\Programs\Python\Python36-32\pythonw.exe` (use pythonw.exe to run quietly, no window)
+   - Set Add arguments to `Kijiji-Scraper.py URL` with any args wanted i.e. `Kijiji-Scraper.py https://www.kijiji.ca/b-calgary/kayak/k0l1700199?price=__1000 -f kayaks.txt -e wanted`
+   - Set Start in to the location of the Kijiji-Scraper.py file i.e. `C:\Users\{username}\Documents\Scripts\`
+   
+4. Under Settings
+   - Enable `Run task as soon as possible after a scheduled start is missed`
+   
+   
+Linux:
+
+Crontab can be used on linux to easily run the script on a set interval.
