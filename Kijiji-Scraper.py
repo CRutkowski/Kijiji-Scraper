@@ -8,7 +8,7 @@ import time
 import sys
 import os
 
-skip_flag = false
+skip_flag = False
 
 def ParseAd(html):  # Parses ad html trees and sorts relevant data into a dictionary
     ad_info = {}
@@ -235,7 +235,7 @@ def main(): # Main function, handles command line arguments and calls other func
         else:
             filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), url_to_scrape)
         if '-s' in args:
-            skip_flag = true
+            skip_flag = True
             args.remove('-s')
         if '-e' in args:
             exclude_list = args[args.index('-e') + 1:]
