@@ -225,7 +225,7 @@ def main(): # Main function, handles command line arguments and calls other func
         print(' -h, --help  show this help message and exit')
         print(' -f\t\tfilename to store ads in (default name is the url)')
         print(' -e\t\tword that will exclude an ad if its in the title (can be a single word or multiple words seperated by spaces')
-        print(' -s\t\tflag that causes the program to skip sending an email. Useful if you want to index ads but not be notified of them.
+        print(' -s\t\tflag that causes the program to skip sending an email. Useful if you want to index ads but not be notified of them')
     else:
         url_to_scrape = args[1]
         if '-f' in args:
