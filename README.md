@@ -1,5 +1,5 @@
 # Kijiji-Scraper 2.5
-### Python script that scrapes Kijiji ad information and sends out an email when a new ad is found.
+### Python 3 script that scrapes Kijiji ad information and sends out an email when a new ad is found.
 
 
  **Replace SENDER_EMAIL, SENDER_EMAIL_PASSWORD, RECEIVER_EMAIL fields in the 'MailAd' function with your email info.**
@@ -8,7 +8,7 @@
  
  **Usage:**
  
- To run the script execute `python Kijiji-Scraper.py URL [-f] [-e] [-s]` the args are as follows:
+ To run the script execute `python3 Kijiji-Scraper.py URL [-f] [-e] [-s]` the args are as follows:
  
  - `URL` the Kijiji URL to scrape for ads i.e. `https://www.kijiji.ca/b-calgary/kayak/k0l1700199?price=__1000` Any filters you use on Kijiji are part of the URL so they will apply to the script.
  
@@ -22,9 +22,9 @@
  
  **Example usage:**
  
- `python Kijiji-Scraper.py https://www.kijiji.ca/b-calgary/kayak/k0l1700199?price=__1000 -f kayaks.txt -e wanted` will find all ads for kayaks with a price of $1000 or less in Calgary and exclue any ads with 'wanted' in the title. The ads will be saved to kayaks.txt
+ `python3 Kijiji-Scraper.py https://www.kijiji.ca/b-calgary/kayak/k0l1700199?price=__1000 -f kayaks.txt -e wanted` will find all ads for kayaks with a price of $1000 or less in Calgary and exclue any ads with 'wanted' in the title. The ads will be saved to kayaks.txt
 
-`python Kijiji-Scraper.py https://www.kijiji.ca/b-calgary/kayak/k0l1700199?price=500__1000 -s` will find all kayak ads in calgary between $500 and $1000 and save them to a file with the url as the name. An email will not be sent in this case because of the -s flag.
+`python3 Kijiji-Scraper.py https://www.kijiji.ca/b-calgary/kayak/k0l1700199?price=500__1000 -s` will find all kayak ads in calgary between $500 and $1000 and save them to a file with the url as the name. An email will not be sent in this case because of the -s flag.
 
 **Dependencies: requests and BeautifulSoup**
 
