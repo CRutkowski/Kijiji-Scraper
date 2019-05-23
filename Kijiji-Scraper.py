@@ -168,7 +168,14 @@ def scrape(url, old_ad_dict, exclude_list, filename, skip_flag):  # Pulls page d
         soup = BeautifulSoup(page.content, "html.parser")
         
         if not email_title: # If the email title doesnt exist pull it form the html data
-            email_title = soup.find('div', {'class': 'message'}).find('strong').text.strip('"')
+            try:
+                email_title = soup.find('div', {'class': 'message'}).find('strong').text.strip('"').strip(" »").strip("« ")
+            except:
+                content = soup.find_all('div', class_='content')
+                for i in content:
+                    if i.find('strong'):
+                        email_title = i.find('strong').text.strip(' »').strip('« ').strip('"')
+
             email_title = toUpper(email_title)
             
         kijiji_ads = soup.find_all("div", {"class": "regular-ad"})  # Finds all ad trees in page html.
