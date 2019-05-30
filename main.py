@@ -19,7 +19,7 @@ if __name__ == "__main__":
         kijiji_scraper.set_exclude_list(exclude_words)
         ads, email_title = kijiji_scraper.scrape_kijiji_for_ads(url)
 
-        if not skip_flag:
+        if not skip_flag and len(ads):
             email_client.mail_ads(ads, email_title)
 
     kijiji_scraper.save_ads()
