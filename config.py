@@ -16,5 +16,5 @@ urls_to_scrape = [
 
     {
         "url": "https://www.kijiji.ca/b-alberta/paddle-board/k0l9003?price=2000__"
-    }
+    },
 ]
