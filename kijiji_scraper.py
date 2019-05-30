@@ -25,6 +25,7 @@ class KijijiScraper():
         # If the file doesn't exist create it
         if not os.path.exists(self.filename):
             ads_file = open(self.filename, 'w')
+            ads_file.write("{}")
             ads_file.close()
             return
 
@@ -124,9 +125,10 @@ class KijijiScraper():
         ad_info["Title"] = ad.find('a', {"class": "title"})
         ad_info["Image"] = str(ad.find('img'))
         ad_info["Url"] = ad.get("data-vip-url")
-        ad_info["Details"] = ad.find('div', {"class": "details"})
+        ad_info["Details"] = ad.find('div', {"class": "details"}).text.strip()
         ad_info["Description"] = ad.find('div', {"class": "description"})
-        ad_info["Date"] = ad.find('span', {"class": "date-posted"})
+        ad_info["Date"] = ad.find('span', {"class": "date-posted"})\
+            .text.strip()
         ad_info["Location"] = ad.find('div', {"class": "location"})
         ad_info["Price"] = ad.find('div', {"class": "price"})
 
@@ -137,15 +139,15 @@ class KijijiScraper():
                     ad_info[key] = 'http://www.kijiji.ca' + value
 
                 elif key == "Description":
-                    ad_info[key] = str(value.text).strip()\
+                    ad_info[key] = value.text.strip()\
                         .replace(ad_info["Details"], '')
 
                 elif key == "Location":
-                    ad_info[key] = str(value.text).strip()\
+                    ad_info[key] = value.text.strip()\
                         .replace(ad_info["Date"], '')
 
-                elif key != "Image":
-                    ad_info[key] = str(value.text).strip()
+                elif key not in ["Image", "Details", "Date"]:
+                    ad_info[key] = value.text.strip()
 
         return ad_info
 
