@@ -1,5 +1,5 @@
 # Kijiji-Scraper 2.6
-### Python 3 script that scrapes Kijiji ad information and sends out an email when a new ad is found.
+### Python 3 script that scrapes Kijiji ad information and sends out an email when a new ads are found.
 
 
  **Config setup**
