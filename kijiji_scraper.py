@@ -137,15 +137,15 @@ class KijijiScraper():
                     ad_info[key] = 'http://www.kijiji.ca' + value
 
                 elif key == "Description":
-                    ad_info[key] = value.text.strip()\
+                    ad_info[key] = str(value.text).strip()\
                         .replace(ad_info["Details"], '')
 
                 elif key == "Location":
-                    ad_info[key] = value.text.strip()\
+                    ad_info[key] = str(value.text).strip()\
                         .replace(ad_info["Date"], '')
 
                 elif key != "Image":
-                    ad_info[key] = value.text.strip()
+                    ad_info[key] = str(value.text).strip()
 
         return ad_info
 
