@@ -1,4 +1,3 @@
-from email_client import EmailClient
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -7,16 +6,13 @@ import os
 
 class KijijiScraper():
 
-    def __init__(self, filename="ads.json", skip_flag=False):
+    def __init__(self, filename="ads.json"):
         self.filename = filename
         self.all_ads = {}
         self.new_ads = {}
 
         self.third_party_ads = []
         self.exclude_list = []
-
-        self.skip_flag = skip_flag
-        self.email_client = EmailClient()
 
         self.load_ads()
 
@@ -63,12 +59,7 @@ class KijijiScraper():
             if url:
                 url = 'https://www.kijiji.ca' + url['href']
 
-        # If dict not emtpy save ads
-        if len(self.new_ads):
-
-            # If skip_flag not set send email
-            if not self.skip_flag:
-                self.email_client.mail_ads(self.new_ads, email_title)
+        return self.new_ads, email_title
 
     def get_email_title(self, soup):
         email_title_location = soup.find('div', {'class': 'message'})
@@ -167,6 +158,6 @@ class KijijiScraper():
 
         return ' '.join(new_title)
 
-    # Rturns a given list of words to lower-case words
+    # Returns a given list of words to lower-case words
     def words_to_lower(self, words):
         return [word.lower() for word in words]
