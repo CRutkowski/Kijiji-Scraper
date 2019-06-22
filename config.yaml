@@ -1,0 +1,32 @@
+# Replace the values in the fields below with your own info so the scraper can send out emails.
+
+# "sender" is the email address that will be sending out the emails. I made a throwaway gmail account for this.
+# "password" is the password for the sender account.
+# "receiver" is the email address that the sender email account will be sending the email to.
+# "smtp server" is the smtp server the sender email account uses. If the sender email is a gmail address you do not need to change this.
+# "smtp port" is the port the above smtp server uses. If the sender email is a gmail address you do not need to change this.
+
+sender: sender@example.com
+password: Sender Password
+receiver: receiver@example.com
+smtp server: smtp.gmail.com
+smtp port: 465
+
+---
+# Set the URLs you wish to scrape below with an optional list of words to exclude per URL.
+# Any filters you apply on the Kijij website are a part of the URL and will apply to the scraper.
+# "url" is as you would guess the URL you want to scrape.
+# "exclude" is a list of words, if an ad title contains any one of the words it will be ignored. Add as many words as you desire.
+
+# There are a couple examples below which you will want to remove/replace with your own.
+# You can add as many URLs as you wish to scrape.
+
+# Just a URL to scrape
+- url: https://www.kijiji.ca/b-bikes/alberta/kona-stinky/k0c644l9003?price=__700
+
+# Url with exclude words given
+- url: https://www.kijiji.ca/b-cars-trucks/alberta/tesla-new__used/c174l9003a54a49
+  exclude:
+    - wanted
+    - gas
+    - base
