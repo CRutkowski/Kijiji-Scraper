@@ -182,14 +182,14 @@ def scrape(url, old_ad_dict, exclude_list, filename, skip_flag):  # Pulls page d
         
         third_party_ads = soup.find_all("div", {"class": "third-party"}) # Find all third-party ads to skip them
         for ad in third_party_ads:
-            third_party_ad_ids.append(ad['data-ad-id'])
+            third_party_ad_ids.append(ad['data-listing-id'])
             
     
         exclude_list = toLower(exclude_list) # Make all words in the exclude list lower-case
         #checklist = ['miata']
         for ad in kijiji_ads:  # Creates a dictionary of all ads with ad id being the keys.
             title = ad.find('a', {"class": "title"}).text.strip() # Get the ad title
-            ad_id = ad['data-ad-id'] # Get the ad id
+            ad_id = ad['data-listing-id'] # Get the ad id
             if not [False for match in exclude_list if match in title.lower()]: # If any of the title words match the exclude list then skip
                 #if [True for match in checklist if match in title.lower()]:
                 if (ad_id not in old_ad_dict and ad_id not in third_party_ad_ids): # Skip third-party ads and ads already found
