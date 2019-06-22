@@ -1,16 +1,15 @@
 import smtplib
 from email.mime.text import MIMEText
-import config
 
 
 class EmailClient():
 
-    def __init__(self):
-        self.sender = config.sender
-        self.passwd = config.passwd
-        self.receiver = config.receiver
-        self.smtp_server = config.smtp_server
-        self.smtp_port = config.smtp_port
+    def __init__(self, email_config):
+        self.sender = email_config.get("sender")
+        self.passwd = email_config.get("password")
+        self.receiver = email_config.get("receiver")
+        self.smtp_server = email_config.get("smtp server")
+        self.smtp_port = email_config.get("smtp port")
 
     # Sends an email with links and info of new ads
     def mail_ads(self, ad_dict, email_title):
@@ -42,18 +41,22 @@ class EmailClient():
             for ad_id in ad_dict:
                 body += '<p><b>' + ad_dict[ad_id]['Title'] + '</b>' + \
                     ' - ' + ad_dict[ad_id]['Location']
-                body += ' - ' + ad_dict[ad_id]['Date'] + '<br /></p>'
+
+                if ad_dict[ad_id]['Date'] != "":
+                    body += ' - ' + ad_dict[ad_id]['Date']
+                body += '<br /></p>'
+
                 body += '<a href="' + ad_dict[ad_id]['Url'] + '">'
+
                 body += ad_dict[ad_id]['Image'] + '</a>'
+
                 body += '<p>' + ad_dict[ad_id]['Description'] + '<br />'
 
                 if ad_dict[ad_id]['Details'] != '':
-                    body += ad_dict[ad_id]['Details'] + '<br />' + \
-                        ad_dict[ad_id]['Price'] + \
-                        '<br /><br /><br /><br /></p>'
-                else:
-                    body += ad_dict[ad_id]['Price'] + \
-                        '<br /><br /><br /><br /></p>'
+                    body += ad_dict[ad_id]['Details'] + '<br />'
+
+                body += ad_dict[ad_id]['Price'] + \
+                    '<br /><br /><br /><br /></p>'
 
         except KeyError:
             body += '<p>' + ad_dict[ad_id]['Title'] + '<br />'

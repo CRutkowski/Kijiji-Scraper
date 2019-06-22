@@ -104,8 +104,6 @@ class KijijiScraper():
                 if (kijiji_ad.id not in self.all_ads and
                         kijiji_ad.id not in self.third_party_ads):
 
-                    print("Found new ad: " + str(kijiji_ad.id))
-
                     self.new_ads[kijiji_ad.id] = kijiji_ad.info
                     self.all_ads[kijiji_ad.id] = kijiji_ad.info
 

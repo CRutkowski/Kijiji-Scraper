@@ -1,27 +1,27 @@
-# Kijiji-Scraper 2.6
-### Python 3 script that scrapes Kijiji ad information and sends out an email when a new ads are found.
+# Kijiji-Scraper 3.0.0
+### Python 3 program that scrapes Kijiji ad information and sends out an email when a new ads are found.
 
 
- **Config setup**
+ **Config setup (config.yaml)**
  
- - Set the `sender`, `passwd` and `receiver` fields in the config.py file.
+ - Set the `sender`, `password` and `receiver` fields in the `config.yaml` file.
  
- - The `urls_to_scrape` field is a list of dictionary objects containing a Kijiji URL to scrape and an optional list of words to exclude. You will need to add a new dictionary object for each URL you want to scrape. There are two examples in the config.
+ - Specify the Kijji URLs you wish to scrape at the bottom of the config file. There are a few examples in the config to show the syntax.
 
 
 Note: If you're using gmail, you'll have to go to 'My Account>Sign in & security>Connected apps & sites' then turn "Allow less secure apps" to "On" to allow the script to sign into gmail.
 
 
-**Dependencies: requests and BeautifulSoup**
+**Dependencies: requests, BeautifulSoup and PyYaml**
 
-Run `pip install -r requirements.txt` to install all dependencies
+Run `pip3 install -r requirements.txt` to install all the dependencies
 
  
  **Usage:**
  
  To run the script execute `python3 main.py [-s]`
  
- - `-s` flag to skip sending an email but will save the ad ids. This is useful for the first time you scrape a Kijiji URL as all the current ads will be indexed and after removing the flag you will only be sent new ads.
+ - `-s` Optional flag to skip sending an email but will save the ad ids. This is useful for the first time you scrape a Kijiji URL as all the current ads will be indexed and after removing the flag you will only be sent new ads.
 
 
 **How to run the script on set intervals:**

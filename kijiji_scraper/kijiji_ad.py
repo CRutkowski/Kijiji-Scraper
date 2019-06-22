@@ -26,8 +26,6 @@ class KijijiAd():
         self.info["Price"] = self.ad.find('div', {"class": "price"})
 
     def __parse_info(self):
-        keys_to_pop = []
-
         # Parse Details and Date information
         self.info["Details"] = self.info["Details"].text.strip() \
             if self.info["Details"] is not None else ""
@@ -36,10 +34,7 @@ class KijijiAd():
 
         # Parse remaining ad information
         for key, value in self.info.items():
-            if not value:
-                keys_to_pop.append(key)
-
-            else:
+            if value:
                 if key == "Url":
                     self.info[key] = 'http://www.kijiji.ca' + value
 
@@ -53,6 +48,3 @@ class KijijiAd():
 
                 elif key not in ["Image", "Details", "Date"]:
                     self.info[key] = value.text.strip()
-
-        for key in keys_to_pop:
-            self.info.pop(key)
