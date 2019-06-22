@@ -17,18 +17,24 @@ class KijijiAd():
         self.info["Image"] = str(self.ad.find('img'))
         self.info["Url"] = self.ad.get("data-vip-url")
         self.info["Details"] = self.ad.find(
-            'div', {"class": "details"}).text.strip()
+            'div', {"class": "details"})
         self.info["Description"] = self.ad.find(
             'div', {"class": "description"})
         self.info["Date"] = self.ad.find(
-            'span', {"class": "date-posted"}).text.strip()
+            'span', {"class": "date-posted"})
         self.info["Location"] = self.ad.find('div', {"class": "location"})
         self.info["Price"] = self.ad.find('div', {"class": "price"})
 
     def __parse_info(self):
         keys_to_pop = []
 
-        # Parse ad information
+        # Parse Details and Date information
+        self.info["Details"] = self.info["Details"].text.strip() \
+            if self.info["Details"] is not None else ""
+        self.info["Date"] = self.info["Date"].text.strip() \
+            if self.info["Date"] is not None else ""
+
+        # Parse remaining ad information
         for key, value in self.info.items():
             if not value:
                 keys_to_pop.append(key)
@@ -38,11 +44,11 @@ class KijijiAd():
                     self.info[key] = 'http://www.kijiji.ca' + value
 
                 elif key == "Description":
-                    self.info[key] = value.text.strip()\
+                    self.info[key] = value.text.strip() \
                         .replace(self.info["Details"], '')
 
                 elif key == "Location":
-                    self.info[key] = value.text.strip()\
+                    self.info[key] = value.text.strip() \
                         .replace(self.info["Date"], '')
 
                 elif key not in ["Image", "Details", "Date"]:

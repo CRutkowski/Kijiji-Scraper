@@ -2,13 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from kijiji_scraper.kijiji_ad import KijijiAd
-import os
+from pathlib import Path
 
 
 class KijijiScraper():
 
     def __init__(self, filename="ads.json"):
-        self.filename = filename
+        self.filepath = Path().absolute().joinpath(filename)
         self.all_ads = {}
         self.new_ads = {}
 
@@ -20,18 +20,18 @@ class KijijiScraper():
     # Reads given file and creates a dict of ads in file
     def load_ads(self):
         # If the file doesn't exist create it
-        if not os.path.exists(self.filename):
-            ads_file = open(self.filename, 'w')
+        if not self.filepath.exists():
+            ads_file = self.filepath.open(mode='w')
             ads_file.write("{}")
             ads_file.close()
             return
 
-        with open(self.filename, "r") as ads_file:
+        with self.filepath.open(mode="r") as ads_file:
             self.all_ads = json.load(ads_file)
 
     # Save ads to file
     def save_ads(self):
-        with open(self.filename, "w") as ads_file:
+        with self.filepath.open(mode="w") as ads_file:
             json.dump(self.all_ads, ads_file)
 
     # Set exclude list
