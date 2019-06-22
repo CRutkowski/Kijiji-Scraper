@@ -21,7 +21,7 @@ Run `pip3 install -r requirements.txt` to install all the dependencies
  
  To run the script execute `python3 main.py [-s]`
  
- - `-s` Optional flag to skip sending an email but will save the ad ids. This is useful for the first time you scrape a Kijiji URL as all the current ads will be indexed and after removing the flag you will only be sent new ads.
+ - `-s` Optional flag to skip sending an email. This is useful for the first time you scrape a Kijiji as the current ads will be indexed and after removing the flag you will only be sent new ads.
 
 
 **How to run the script on set intervals:**
