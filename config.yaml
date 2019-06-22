@@ -15,7 +15,7 @@ smtp port: 465
 ---
 # Set the URLs you wish to scrape below with an optional list of words to exclude per URL.
 # Any filters you apply on the Kijij website are a part of the URL and will apply to the scraper.
-# "url" is as you would guess the URl you want to scrape.
+# "url" is as you would guess the URL you want to scrape.
 # "exclude" is a list of words, if an ad title contains any one of the words it will be ignored. Add as many words as you desire.
 
 # There are a couple examples below which you will want to remove/replace with your own.
