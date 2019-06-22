@@ -62,26 +62,6 @@ class KijijiScraper():
 
         return self.new_ads, email_title
 
-    def get_email_title(self, soup):
-        email_title_location = soup.find('div', {'class': 'message'})
-
-        if email_title_location:
-
-            if email_title_location.find('strong'):
-                email_title = email_title_location.find('strong')\
-                    .text.strip('"').strip(" »").strip("« ")
-                return self.format_title(email_title)
-
-        content = soup.find_all('div', class_='content')
-        for i in content:
-
-            if i.find('strong'):
-                email_title = i.find('strong')\
-                    .text.strip(' »').strip('« ').strip('"')
-                return self.format_title(email_title)
-
-        return ""
-
     def find_ads(self, soup):
         # Finds all ad trees in page html.
         kijiji_ads = soup.find_all("div", {"class": "search-item regular-ad"})
@@ -106,6 +86,26 @@ class KijijiScraper():
 
                     self.new_ads[kijiji_ad.id] = kijiji_ad.info
                     self.all_ads[kijiji_ad.id] = kijiji_ad.info
+
+    def get_email_title(self, soup):
+        email_title_location = soup.find('div', {'class': 'message'})
+
+        if email_title_location:
+
+            if email_title_location.find('strong'):
+                email_title = email_title_location.find('strong')\
+                    .text.strip('"').strip(" »").strip("« ")
+                return self.format_title(email_title)
+
+        content = soup.find_all('div', class_='content')
+        for i in content:
+
+            if i.find('strong'):
+                email_title = i.find('strong')\
+                    .text.strip(' »').strip('« ').strip('"')
+                return self.format_title(email_title)
+
+        return ""
 
     # Makes the first letter of every word upper-case
     def format_title(self, title):
