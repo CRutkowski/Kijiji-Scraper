@@ -1,6 +1,6 @@
 import config
-from kijiji_scraper import KijijiScraper
-from email_client import EmailClient
+from kijiji_scraper.kijiji_scraper import KijijiScraper
+from kijiji_scraper.email_client import EmailClient
 import sys
 
 if __name__ == "__main__":

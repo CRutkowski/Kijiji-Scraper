@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+from kijiji_scraper.kijiji_ad import KijijiAd
 import os
 
 
@@ -88,59 +89,25 @@ class KijijiScraper():
         # Find all third-party ads to skip them
         third_party_ads = soup.find_all("div", {"class": "third-party"})
         for ad in third_party_ads:
-            self.third_party_ads.append(ad['data-listing-id'])
+            thid_party_ad_id = KijijiAd(ad).id
+            self.third_party_ads.append(thid_party_ad_id)
 
         # Create a dictionary of all ads with ad id being the key
         for ad in kijiji_ads:
-            title = ad.find('a', {"class": "title"}).text.strip()
-            ad_id = ad['data-listing-id']
+            kijiji_ad = KijijiAd(ad)
 
             # If any of the title words match the exclude list then skip
             if not [False for match in self.exclude_list
-                    if match in title.lower()]:
+                    if match in kijiji_ad.title.lower()]:
 
                 # Skip third-party ads and ads already found
-                if (ad_id not in self.all_ads and
-                        ad_id not in self.third_party_ads):
+                if (kijiji_ad.id not in self.all_ads and
+                        kijiji_ad.id not in self.third_party_ads):
 
-                    print("Found new ad: " + str(ad_id))
+                    print("Found new ad: " + str(kijiji_ad.id))
 
-                    parsed_ad = self.parse_ad(ad)
-                    self.new_ads[ad_id] = parsed_ad
-                    self.all_ads[ad_id] = parsed_ad
-
-    def parse_ad(self, ad):
-        ad_info = {}
-
-        # Locate ad information
-        ad_info["Title"] = ad.find('a', {"class": "title"})
-        ad_info["Image"] = str(ad.find('img'))
-        ad_info["Url"] = ad.get("data-vip-url")
-        ad_info["Details"] = ad.find('div', {"class": "details"}).text.strip()
-        ad_info["Description"] = ad.find('div', {"class": "description"})
-        ad_info["Date"] = ad.find('span', {"class": "date-posted"})\
-            .text.strip()
-        ad_info["Location"] = ad.find('div', {"class": "location"})
-        ad_info["Price"] = ad.find('div', {"class": "price"})
-
-        # Parse ad information
-        for key, value in ad_info.items():
-            if value:
-                if key == "Url":
-                    ad_info[key] = 'http://www.kijiji.ca' + value
-
-                elif key == "Description":
-                    ad_info[key] = value.text.strip()\
-                        .replace(ad_info["Details"], '')
-
-                elif key == "Location":
-                    ad_info[key] = value.text.strip()\
-                        .replace(ad_info["Date"], '')
-
-                elif key not in ["Image", "Details", "Date"]:
-                    ad_info[key] = value.text.strip()
-
-        return ad_info
+                    self.new_ads[kijiji_ad.id] = kijiji_ad.info
+                    self.all_ads[kijiji_ad.id] = kijiji_ad.info
 
     # Makes the first letter of every word upper-case
     def format_title(self, title):
