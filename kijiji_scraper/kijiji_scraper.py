@@ -66,11 +66,21 @@ class KijijiScraper():
         # Finds all ad trees in page html.
         kijiji_ads = soup.find_all("div", {"class": "search-item regular-ad"})
 
+        # If no ads use different class name
+        if not kijiji_ads:
+            kijiji_ads = soup.find_all("div", {"class": "search-item"})
+
         # Find all third-party ads to skip them
         third_party_ads = soup.find_all("div", {"class": "third-party"})
+
+        # Use different class name if no third party ads found
+        if not third_party_ads:
+            third_party_ads = soup.find_all(
+                "div", {"class": "search-item showcase top-feature"})
+
         for ad in third_party_ads:
-            thid_party_ad_id = KijijiAd(ad).id
-            self.third_party_ads.append(thid_party_ad_id)
+            third_party_ad_id = KijijiAd(ad).id
+            self.third_party_ads.append(third_party_ad_id)
 
         # Create a dictionary of all ads with ad id being the key
         for ad in kijiji_ads:
