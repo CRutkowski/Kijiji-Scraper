@@ -24,6 +24,7 @@ class KijijiAd():
             'span', {"class": "date-posted"})
         self.info["Location"] = self.ad.find('div', {"class": "location"})
         self.info["Price"] = self.ad.find('div', {"class": "price"})
+        self.info["DataSource"] = str(self.ad.find('img').get('data-src'))
 
     def __parse_info(self):
         # Parse Details and Date information
@@ -45,6 +46,9 @@ class KijijiAd():
                 elif key == "Location":
                     self.info[key] = value.text.strip() \
                         .replace(self.info["Date"], '')
+                    
+                elif key == "Image":
+                    self.info[key] = '<img src =\"' + (self.info["DataSource"]) + '\"/>'
 
-                elif key not in ["Image", "Details", "Date"]:
+                elif key not in ["DataSource", "Details", "Date"]:
                     self.info[key] = value.text.strip()
