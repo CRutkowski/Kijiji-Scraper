@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 class EmailClient():
 
     def __init__(self, email_config):
-        self.from_email = email_config.get("from email")
+        self.from_email = email_config.get("from")
         self.username = email_config.get("username")
         self.password = email_config.get("password")
         self.receiver = email_config.get("receiver")
