@@ -6,7 +6,7 @@
 # "smtp server" is the smtp server the sender email account uses. If the sender email is a gmail address you do not need to change this.
 # "smtp port" is the port the above smtp server uses. If the sender email is a gmail address you do not need to change this.
 
-from: sender@example.com
+from email: sender@example.com
 username: sender@example.com
 password: Sender Password
 receiver: receiver@example.com
