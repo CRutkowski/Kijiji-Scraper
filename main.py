@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import yaml
 import sys
+import os
 
 from kijiji_scraper.kijiji_scraper import KijijiScraper
 from kijiji_scraper.email_client import EmailClient
@@ -8,6 +9,11 @@ from kijiji_scraper.email_client import EmailClient
 if __name__ == "__main__":
     args = sys.argv
     skip_flag = "-s" in args
+    
+    # Change working directory to current directory
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
 
     # Get config values
     with open("config.yaml", "r") as config_file:
