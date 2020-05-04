@@ -28,14 +28,14 @@ if __name__ == "__main__":
         url = url_dict.get("url")
         exclude_words = url_dict.get("exclude", [])
 
-        print(f"Scraping: {url}")
+        print("Scraping: %s"%url)
         if len(exclude_words):
             print("Excluding: " + ", ".join(exclude_words))
 
         kijiji_scraper.set_exclude_list(exclude_words)
         ads, email_title = kijiji_scraper.scrape_kijiji_for_ads(url)
 
-        info_string = f"Found {len(ads)} new ads\n" \
+        info_string = "Found %s new ads\n"%len(ads) \
             if len(ads) != 1 else "Found 1 new ad\n"
         print(info_string)
 
