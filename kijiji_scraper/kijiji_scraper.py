@@ -8,7 +8,7 @@ from pathlib import Path
 class KijijiScraper():
 
     def __init__(self, filename="ads.json"):
-        self.filepath = Path().absolute().joinpath(filename)
+        self.filepath = Path().absolute().joinpath(filename) if filename else None
         self.all_ads = {}
         self.new_ads = {}
 
@@ -19,20 +19,24 @@ class KijijiScraper():
 
     # Reads given file and creates a dict of ads in file
     def load_ads(self):
-        # If the file doesn't exist create it
-        if not self.filepath.exists():
-            ads_file = self.filepath.open(mode='w')
-            ads_file.write("{}")
-            ads_file.close()
-            return
+        # If filepath is None, just skip local file
+        if self.filepath:
+            # If the file doesn't exist create it
+            if not self.filepath.exists():
+                ads_file = self.filepath.open(mode='w')
+                ads_file.write("{}")
+                ads_file.close()
+                return
 
-        with self.filepath.open(mode="r") as ads_file:
-            self.all_ads = json.load(ads_file)
+            with self.filepath.open(mode="r") as ads_file:
+                self.all_ads = json.load(ads_file)
 
     # Save ads to file
     def save_ads(self):
-        with self.filepath.open(mode="w") as ads_file:
-            json.dump(self.all_ads, ads_file)
+        # If filepath is None, just skip local file
+        if self.filepath:
+            with self.filepath.open(mode="w") as ads_file:
+                json.dump(self.all_ads, ads_file)
 
     # Set exclude list
     def set_exclude_list(self, exclude_words):

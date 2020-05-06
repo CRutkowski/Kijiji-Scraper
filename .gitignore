@@ -2,3 +2,6 @@ __pycache__
 *.pyc
 .vscode
 ads.json
+kijiji_scraper.egg-info/*
+dist/*
+build/*

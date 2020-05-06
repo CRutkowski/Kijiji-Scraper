@@ -1,32 +1,63 @@
-# Kijiji-Scraper 3.0.0
-### Python 3 program that scrapes Kijiji ad information and sends out an email when a new ads are found.
+# Kijiji-Scraper
+#### Track Kijiji ad information and sends out an email when a new ads are found.
+## Install
+### With PyPi (stable)
+   ```bash
+   pip install kijiji_scraper
+   ```
+### Manually (develop)
+   ```bash
+   git clone https://github.com/CRutkowski/Kijiji-Scraper.git
+   cd Kijiji-Scraper
+   python3 setup.py install
+   ```
+**Dependencies: requests, BeautifulSoup and PyYaml**  
+Run `pip install requests bs4 pyyaml` to manually install all the dependencies
+## Try out
+For instance `kijiji --url https://www.kijiji.ca/b-cars-trucks/alberta/tesla-new__used/c174l9003a54a49`
 
-
- **Config setup (config.yaml)**
- 
- - Set the `sender`, `password` and `receiver` fields in the `config.yaml` file.
- 
- - Specify the Kijji URLs you wish to scrape at the bottom of the config file. There are a few examples in the config to show the syntax.
-
+## Configure
+The script **must read a configuration file to set mail server settings**. Default config file `config.yalm` is located in `~/.kijiji_scraper/` (MacOS/Linux), `%APPDATA%/.kijiji_scraper` (Windows) or directly in the install folder.
+ - Use `kijiji --init` to create config file and open with default text editor   
+   OR set the `sender`, `password` and `receiver` fields in the default `config.yaml` file in the install folder, **do not work if Kijiji-Scraper is installed with PyPi** (use `./main.py`).
+ - Specify the Kijji URLs you wish to scrape at the bottom of the config file. There are a few examples in the config to show the syntax.  
 
 Note: If you're using gmail, you'll have to go to 'My Account>Sign in & security>Connected apps & sites' then turn "Allow less secure apps" to "On" to allow the script to sign into gmail.
 
-
-**Dependencies: requests, BeautifulSoup and PyYaml**
-
-Run `pip3 install -r requirements.txt` to install all the dependencies
-
+## Usage
  
- **Usage:**
- 
- To run the script execute `python3 main.py [-s]`
- 
- - `-s` Optional flag to skip sending an email. This is useful for the first time you scrape a Kijiji as the current ads will be indexed and after removing the flag you will only be sent new ads.
+ To run the script execute `kijiji` command. You can always run `python3 ./main.py` from install folder.
+
+```
+% kijiji -h
+usage: kijiji [-h] [--conf File path] [--url URL [URL ...]]
+               [--email Email [Email ...]] [--skipmail] [--all] [--version]
+
+Kijiji scraper: Track ad informations and sends out an email when a new ads
+are found
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --conf File path, -c File path
+                        The script * must read a configuration file to set
+                        mail server settings *. Default config file
+                        config.yalm is located in the install folder.
+  --url URL [URL ...], -u URL [URL ...]
+                        Kijiji seacrh URLs to scrape
+  --email Email [Email ...], -e Email [Email ...]
+                        Email recepients
+  --skipmail, -s        Do not send emails. This is useful for the first time
+                        you scrape a Kijiji as the current ads will be indexed
+                        and after removing the flag you will only be sent new
+                        ads.
+  --all, -a             Reconsider all ads, just for this run
+  --version, -V         Print Kijiji-Scraper version
+```
 
 
-**How to run the script on set intervals:**
+## How to run the script on set intervals:**
 
-Windows:
+### Windows:
 
 The windows `Task Scheduler` can be used to have the script run at set intervals.
 
@@ -48,6 +79,9 @@ The windows `Task Scheduler` can be used to have the script run at set intervals
    - Enable `Run task as soon as possible after a scheduled start is missed`
    
    
-Linux:
-
-Crontab can be used on linux to easily run the script on a set interval.
+### Linux and MacOS:
+Crontab can be used on linux to easily run the script on a set interval.  
+To search for new ads every 5mn: 
+```
+*/5 * * * * kijiji --url [...]
+```
