@@ -105,7 +105,7 @@ def get_ads_summary(ads):
 
     for ad_id in ads:
         string+='\n'
-        string+=frow.format(ads[ad_id]['Title'], ads[ad_id]['Url'])
+        string+=frow.format(str(ads[ad_id]['Title'].encode('utf-8'), errors='replace'), str(ads[ad_id]['Url']))
 
     return string
 
