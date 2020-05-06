@@ -80,8 +80,10 @@ def main():
         info_string = "Found %s new ads"%len(ads) \
             if len(ads) != 1 else "Found 1 new ad"
         print(info_string)
-        print(get_ads_summary(ads))
-
+	# Print ads summary list 
+        sys.stdout.buffer.write(get_ads_summary(ads).encode('utf-8'))
+        print()
+        # Send email
         if not args.skipmail and len(ads):
             email_client = EmailClient(email_config)
             # Overwrite email recepeients if specified
@@ -105,7 +107,7 @@ def get_ads_summary(ads):
 
     for ad_id in ads:
         string+='\n'
-        string+=frow.format(str(ads[ad_id]['Title'].encode('utf-8'), errors='replace'), str(ads[ad_id]['Url']))
+        string+=frow.format(str(ads[ad_id]['Title']), str(ads[ad_id]['Url']))
 
     return string
 
