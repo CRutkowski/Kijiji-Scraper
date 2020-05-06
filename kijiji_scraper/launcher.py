@@ -10,7 +10,7 @@ from . import VERSION
 
 def parse_args():
     parser = argparse.ArgumentParser(description="""Kijiji scraper: Track ad informations and sends out an email when a new ads are found""")
-    parser.add_argument('--init', help="Create config file and open with default text editor", action='store_true')
+    parser.add_argument('--init','--setup', help="Create config file if doesn't exist and open with default text editor", action='store_true')
     parser.add_argument('--conf', '-c', metavar='File path', help="""The script * must read a configuration file to set mail server settings *. Default config file config.yalm is located in ~/.kijiji_scraper/ (MacOS/Linux), APPDATA/.kijiji_scraper (Windows) or directly in the install folder.""")
     parser.add_argument('--url', '-u', metavar="URL", help="Kijiji seacrh URLs to scrape", nargs='+', default=None)
     parser.add_argument('--email','-e', metavar="Email", help="Email recepients", nargs='+',  default=None)
@@ -156,15 +156,8 @@ smtp port: 465
 # There are a couple examples below which you will want to remove/replace with your own.
 # You can add as many URLs as you wish to scrape.
 
-# Just a URL to scrape
-- url: https://www.kijiji.ca/b-bikes/alberta/kona-stinky/k0c644l9003?price=__700
-
-# Url with exclude words given
-- url: https://www.kijiji.ca/b-cars-trucks/alberta/tesla-new__used/c174l9003a54a49
-  exclude:
-    - wanted
-    - gas
-    - base
+# URLs to scrape
+# - url: https://www.kijiji.ca/b-bikes/alberta/kona-stinky/k0c644l9003?price=__700
 """
     # Find file or create it
     filepath=find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], [".kijiji_scraper/config.yaml"], default_content=default_config, create=True)
