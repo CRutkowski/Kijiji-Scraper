@@ -59,7 +59,7 @@ def main():
     print()
 
     # Initialize the KijijiScraper and email client
-    filepath = find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], ['.kijiji_scraper/ads.json']) if not args.all else None
+    filepath = find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], ['.kijiji_scraper/ads.json'], default_content='{}', create=True) if not args.all else None
     kijiji_scraper = KijijiScraper(filepath)
    
     # Overwrite search URLs if specified
