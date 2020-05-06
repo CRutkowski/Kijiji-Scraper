@@ -18,11 +18,11 @@ For instance `kijiji --url https://www.kijiji.ca/b-cars-trucks/alberta/tesla-new
 
 ## Configure
 The script **must read a configuration file to set mail server settings**. Default config file `config.yalm` is located in `~/.kijiji_scraper/` (MacOS/Linux), `%APPDATA%/.kijiji_scraper` (Windows) or directly in the install folder.
- - Use `kijiji --init` to create config file and open with default text editor   
-   OR set the `sender`, `password` and `receiver` fields in the default `config.yaml` file in the install folder, **do not work if Kijiji-Scraper is installed with PyPi** (use `./main.py`).
+ - **Use `kijiji --init` to create config file and open with default text editor**, set the `sender`, `password` and `receiver` fields in config file.
  - Specify the Kijji URLs you wish to scrape at the bottom of the config file. There are a few examples in the config to show the syntax.  
+ - You can also use default `config.yalm` file in the install folder but you must call `./main.py` directly, not `kijiji` command
 
-Note: If you're using gmail, you'll have to go to 'My Account>Sign in & security>Connected apps & sites' then turn "Allow less secure apps" to "On" to allow the script to sign into gmail.
+**Note**: If you're using gmail, you'll have to go to 'My Account>Sign in & security>Connected apps & sites' then turn "Allow less secure apps" to "On" to allow the script to sign into gmail.
 
 ## Usage
  
@@ -55,7 +55,7 @@ optional arguments:
 ```
 
 
-## How to run the script on set intervals:**
+## How to run the script on set intervals
 
 ### Windows:
 
