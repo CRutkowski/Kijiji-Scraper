@@ -87,6 +87,8 @@ def main():
             # Overwrite email recepeients if specified
             if args.email: email_client.receiver=','.join(args.email)
             email_client.mail_ads(ads, email_title)
+            print("Email sent to %s"%email_client.receiver)
+        else: print("No email sent")
 
     kijiji_scraper.save_ads()
 
@@ -103,7 +105,7 @@ def get_ads_summary(ads):
 
     for ad_id in ads:
         string+='\n'
-        string+=frow.format(str(ads[ad_id]['Title']), str(ads[ad_id]['Url']))
+        string+=frow.format(ads[ad_id]['Title'], ads[ad_id]['Url'])
 
     return string
 
