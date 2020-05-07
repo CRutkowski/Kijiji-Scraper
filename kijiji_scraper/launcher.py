@@ -15,7 +15,7 @@ def parse_args():
     parser.add_argument('--url', '-u', metavar="URL", help="Kijiji seacrh URLs to scrape", nargs='+', default=None)
     parser.add_argument('--email','-e', metavar="Email", help="Email recepients", nargs='+',  default=None)
     parser.add_argument('--skipmail', '-s', help="Do not send emails. This is useful for the first time you scrape a Kijiji as the current ads will be indexed and after removing the flag you will only be sent new ads.", action='store_true')
-    parser.add_argument('--all', '-a', help="Reconsider all ads, just for this run", action='store_true')
+    parser.add_argument('--all', '-a', help="Consider all ads as new, do not load ads.json file", action='store_true')
     parser.add_argument('--version', '-V', help="Print Kijiji-Scraper version", action='store_true')
     args = parser.parse_args()
     return(args)
@@ -56,11 +56,18 @@ def main():
         email_config, urls_to_scrape = ({},{})
         # Do not try to send mail if no config file is loaded
         args.skipmail=True
-    print()
 
     # Initialize the KijijiScraper and email client
-    filepath = find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], ['.kijiji_scraper/ads.json'], default_content='{}', create=True) if not args.all else None
-    kijiji_scraper = KijijiScraper(filepath)
+    if not args.all:
+        ads_filepath=None
+        # Find default ads.json file in PWD directory for retro-compatibility
+        if os.path.exists("ads.json"): ads_filepath="ads.json"
+        # Find default ads.json file in env variables
+        if not ads_filepath:
+            ads_filepath = find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], ['.kijiji_scraper/ads.json'], default_content='{}', create=True)
+        print("Ads file: %s"%ads_filepath)
+    else: ads_filepath=None
+    kijiji_scraper = KijijiScraper(ads_filepath)
    
     # Overwrite search URLs if specified
     if args.url: urls_to_scrape = [{'url':u} for u in args.url]
@@ -80,9 +87,9 @@ def main():
         info_string = "Found %s new ads"%len(ads) \
             if len(ads) != 1 else "Found 1 new ad"
         print(info_string)
-	# Print ads summary list 
+
+	    # Print ads summary list 
         sys.stdout.buffer.write(get_ads_summary(ads).encode('utf-8'))
-        print()
         # Send email
         if not args.skipmail and len(ads):
             email_client = EmailClient(email_config)
@@ -109,7 +116,7 @@ def get_ads_summary(ads):
         string+='\n'
         string+=frow.format(str(ads[ad_id]['Title']), str(ads[ad_id]['Url']))
 
-    return string
+    return string+'\n'
 
 def find_file(env_location, potential_files, default_content="", create=False):
     potential_paths=[]
@@ -162,6 +169,13 @@ smtp port: 465
 
 # URLs to scrape
 # - url: https://www.kijiji.ca/b-bikes/alberta/kona-stinky/k0c644l9003?price=__700
+
+# Url with exclude words given
+# - url: https://www.kijiji.ca/b-cars-trucks/alberta/tesla-new__used/c174l9003a54a49
+#   exclude:
+#     - wanted
+#     - gas
+#     - base
 """
     # Find file or create it
     filepath=find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], [".kijiji_scraper/config.yaml"], default_content=default_config, create=True)

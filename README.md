@@ -1,4 +1,4 @@
-# Kijiji-Scraper
+# Kijiji-Scraper 3.0.1
 #### Track Kijiji ad information and sends out an email when a new ads are found.
 ## Install
 ### With PyPi (stable)
@@ -29,19 +29,23 @@ The script **must read a configuration file to set mail server settings**. Defau
  To run the script execute `kijiji` command. You can always run `python3 ./main.py` from install folder.
 
 ```
-% kijiji -h
-usage: kijiji [-h] [--conf File path] [--url URL [URL ...]]
-               [--email Email [Email ...]] [--skipmail] [--all] [--version]
+% kijiji --help           
+usage: kijiji [-h] [--init] [--conf File path] [--url URL [URL ...]]
+              [--email Email [Email ...]] [--skipmail] [--all] [--version]
 
 Kijiji scraper: Track ad informations and sends out an email when a new ads
 are found
 
 optional arguments:
   -h, --help            show this help message and exit
+  --init, --setup       Create config file if doesn't exist and open with
+                        default text editor
   --conf File path, -c File path
                         The script * must read a configuration file to set
                         mail server settings *. Default config file
-                        config.yalm is located in the install folder.
+                        config.yalm is located in ~/.kijiji_scraper/
+                        (MacOS/Linux), APPDATA/.kijiji_scraper (Windows) or
+                        directly in the install folder.
   --url URL [URL ...], -u URL [URL ...]
                         Kijiji seacrh URLs to scrape
   --email Email [Email ...], -e Email [Email ...]
@@ -50,10 +54,11 @@ optional arguments:
                         you scrape a Kijiji as the current ads will be indexed
                         and after removing the flag you will only be sent new
                         ads.
-  --all, -a             Reconsider all ads, just for this run
+  --all, -a             Consider all ads as new, do not load ads.json file
   --version, -V         Print Kijiji-Scraper version
 ```
 
+**Note**: The script stores current ads in `ads.json` file located in the config folder `~/.kijiji_scraper/` or `%APPDATA%/.kijiji_scraper`.
 
 ## How to run the script on set intervals
 
