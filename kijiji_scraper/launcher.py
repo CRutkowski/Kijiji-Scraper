@@ -58,15 +58,14 @@ def main():
         args.skipmail=True
 
     # Initialize the KijijiScraper and email client
+    ads_filepath=None
     if not args.all:
-        ads_filepath=None
         # Find default ads.json file in PWD directory for retro-compatibility
         if os.path.exists("ads.json"): ads_filepath="ads.json"
         # Find default ads.json file in env variables
         if not ads_filepath:
             ads_filepath = find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], ['.kijiji_scraper/ads.json'], default_content='{}', create=True)
         print("Ads file: %s"%ads_filepath)
-    else: ads_filepath=None
     kijiji_scraper = KijijiScraper(ads_filepath)
    
     # Overwrite search URLs if specified
@@ -99,7 +98,7 @@ def main():
             print("Email sent to %s"%email_client.receiver)
         else: print("No email sent")
 
-    kijiji_scraper.save_ads()
+    if ads_filepath: kijiji_scraper.save_ads()
 
 def get_ads_summary(ads):
     string=''
