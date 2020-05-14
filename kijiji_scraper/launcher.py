@@ -16,6 +16,7 @@ def parse_args():
     parser.add_argument('--email','-e', metavar="Email", help="Email recepients", nargs='+',  default=None)
     parser.add_argument('--skipmail', '-s', help="Do not send emails. This is useful for the first time you scrape a Kijiji as the current ads will be indexed and after removing the flag you will only be sent new ads.", action='store_true')
     parser.add_argument('--all', '-a', help="Consider all ads as new, do not load ads.json file", action='store_true')
+    parser.add_argument('--ads' , metavar="File path", help="Load specific ads JSON file. Default file will be store in the config folder")
     parser.add_argument('--version', '-V', help="Print Kijiji-Scraper version", action='store_true')
     args = parser.parse_args()
     return(args)
@@ -60,16 +61,23 @@ def main():
     # Initialize the KijijiScraper and email client
     ads_filepath=None
     if not args.all:
-        # Find default ads.json file in PWD directory for retro-compatibility
-        if os.path.exists("ads.json"): ads_filepath="ads.json"
-        # Find default ads.json file in env variables
-        if not ads_filepath:
-            ads_filepath = find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], ['.kijiji_scraper/ads.json'], default_content='{}', create=True)
+        if args.ads: ads_filepath=args.ads
+        else:
+            # Find default ads.json file in PWD directory for retro-compatibility
+            if os.path.exists("ads.json"): ads_filepath="ads.json"
+            # Find default ads.json file in env variables
+            if not ads_filepath:
+                ads_filepath = find_file(['HOME', 'XDG_CONFIG_HOME', 'APPDATA'], ['.kijiji_scraper/ads.json'], default_content='{}', create=True)
         print("Ads file: %s"%ads_filepath)
     kijiji_scraper = KijijiScraper(ads_filepath)
    
     # Overwrite search URLs if specified
     if args.url: urls_to_scrape = [{'url':u} for u in args.url]
+
+    # Nice quit if no URLs
+    if not urls_to_scrape :
+        print("You must supply at least one URL to scrape. Use --url or configure URLs in the config file.")
+        exit(-1)
 
     # Scrape each url given in config file
     for url_dict in urls_to_scrape:
