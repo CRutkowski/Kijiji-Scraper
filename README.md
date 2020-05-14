@@ -19,10 +19,12 @@ For instance `kijiji --url https://www.kijiji.ca/b-cars-trucks/alberta/tesla-new
 ## Configure
 The script **must read a configuration file to set mail server settings**. Default config file `config.yalm` is located in `~/.kijiji_scraper/` (MacOS/Linux), `%APPDATA%/.kijiji_scraper` (Windows) or directly in the install folder.
  - **Use `kijiji --init` to create config file and open with default text editor**, set the `sender`, `password` and `receiver` fields in config file.
- - Specify the Kijji URLs you wish to scrape at the bottom of the config file. There are a few examples in the config to show the syntax.  
- - You can also use default `config.yalm` file in the install folder but you must call `./main.py` directly, not `kijiji` command
+ - You can specify the Kijji URLs you wish to scrape at the bottom of the config file. There are a few examples in the config to show the syntax.  
+ - Alternatively you can use `--url URLs` to configure URLs to scrape and `--email` to set receivers addresses.
 
 **Note**: If you're using gmail, you'll have to go to 'My Account>Sign in & security>Connected apps & sites' then turn "Allow less secure apps" to "On" to allow the script to sign into gmail.
+
+**For development and retro-compatibility** You can also use default `config.yalm` file as the config file in the install folder but you must call `./main.py` directly, not `kijiji` command. 
 
 ## Usage
  
@@ -31,7 +33,8 @@ The script **must read a configuration file to set mail server settings**. Defau
 ```
 % kijiji --help           
 usage: kijiji [-h] [--init] [--conf File path] [--url URL [URL ...]]
-              [--email Email [Email ...]] [--skipmail] [--all] [--version]
+               [--email Email [Email ...]] [--skipmail] [--all]
+               [--ads File path] [--version]
 
 Kijiji scraper: Track ad informations and sends out an email when a new ads
 are found
@@ -55,10 +58,12 @@ optional arguments:
                         and after removing the flag you will only be sent new
                         ads.
   --all, -a             Consider all ads as new, do not load ads.json file
+  --ads File path       Load specific ads JSON file. Default file will be
+                        store in the config folder
   --version, -V         Print Kijiji-Scraper version
 ```
 
-**Note**: The script stores current ads in `ads.json` file located in the config folder `~/.kijiji_scraper/` or `%APPDATA%/.kijiji_scraper`.
+**Note**: The script stores current ads in `ads.json` file located by default in the config folder `~/.kijiji_scraper/` or `%APPDATA%/.kijiji_scraper`. If a `./ads.json` file exist, it will be loaded
 
 ## How to run the script on set intervals
 
@@ -88,5 +93,13 @@ The windows `Task Scheduler` can be used to have the script run at set intervals
 Crontab can be used on linux to easily run the script on a set interval.  
 To search for new ads every 5mn: 
 ```
-*/5 * * * * kijiji --url [...]
+*/5 * * * * kijiji --url URL1 URL2 --email me@gmail.com you@gmail.com
+```
+
+## Running several searches configurations
+In order to avoid concurrent accesses to ads JSON file and corrupt the file, you'll need to dedicate one file per searches
+```
+*/5 * * * * kijiji --url URL1 URL2 --email me@gmail.com you@gmail.com --ads ~/our-ads.json
+*/5 * * * * kijiji --url URL3 --email robert@gmail.com --ads ~/roberts-ads.json
+*/5 * * * * kijiji --url URL4 --email laura@gmail.com --ads ~/lauras-ads.json
 ```
