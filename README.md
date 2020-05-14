@@ -1,11 +1,8 @@
 # Kijiji-Scraper 3.0.1
+![Build](https://github.com/CRutkowski/Kijiji-Scraper/workflows/Build/badge.svg?branch=master)
 #### Track Kijiji ad information and sends out an email when a new ads are found.
 ## Install
-### With PyPi (stable)
-   ```bash
-   pip install kijiji_scraper
-   ```
-### Manually (develop)
+### Manually
    ```bash
    git clone https://github.com/CRutkowski/Kijiji-Scraper.git
    cd Kijiji-Scraper
