@@ -2,7 +2,18 @@
 ![Build](https://github.com/CRutkowski/Kijiji-Scraper/workflows/Build/badge.svg?branch=master)
 #### Track Kijiji ad information and sends out an email when a new ads are found.
 ## Install
-### Manually
+### Dependencies
+- **Git** ([Git bash for Windows](https://gitforwindows.org))
+- **Python 3** ([install guide](https://realpython.com/installing-python/))
+
+Open terminal or Gitbash.
+
+##### With `pip`
+   Run the following to install automatically Kijiji-Scraper on your system.
+   ```bash
+   pip install git+https://github.com/CRutkowski/Kijiji-Scraper.git
+   ```
+##### Manually
    ```bash
    git clone https://github.com/CRutkowski/Kijiji-Scraper.git
    cd Kijiji-Scraper
@@ -94,9 +105,37 @@ To search for new ads every 5mn:
 ```
 
 ## Running several searches configurations
-In order to avoid concurrent accesses to ads JSON file and corrupt the file, you'll need to dedicate one file per searches
+
+If you want to share your tech skills with your friends, you need to do an extra step, but it's worth it !  
+
+In order to avoid concurrent accesses to ads JSON file and corrupt the file , you'll need to dedicate one file per searches (this WILL happend to you if you don't follow this advise). In the following example, ads matching URL1 will be sent to robert, you and me (because robert is usung a different ads file) - same for URL2 and laura. 
+
+
+```crontab
+# Crontab
+*/5 * * * * kijiji --email me@gmail.com you@gmail.com --ads ~/our-ads.json --url "URL1" "URL2" 
+*/5 * * * * kijiji --email robert@gmail.com --ads ~/roberts-ads.json --url "URL1" 
+*/5 * * * * kijiji --email laura@gmail.com --ads ~/lauras-ads.json --url "URL3" "URL2"
 ```
-*/5 * * * * kijiji --url URL1 URL2 --email me@gmail.com you@gmail.com --ads ~/our-ads.json
-*/5 * * * * kijiji --url URL3 --email robert@gmail.com --ads ~/roberts-ads.json
-*/5 * * * * kijiji --url URL4 --email laura@gmail.com --ads ~/lauras-ads.json
+
+You might run into crontab command too long error if you have too many URLs. Just create a bash script and run it instead of having the entire command in crontab. 
+
+Exemple
+```bash
+#! /bin/bash
+# /root/Ads/kijiji.sh
+
+kijiji --email me@gmail.com --ads /root/Ads/my-ads.json \
+        --url     "URL1" "URL2"
+
+kijiji  --email robert@gmail.com --ads /root/Ads/robert-ads.json \
+        --url   "URL1"
+
+kijiji  --email laura@gmail.com --ads /root/Ads/lauras-ads.json \
+        --url   "URL3"
 ```
+
+```crontab
+# Crontab
+*/10 * * * * /root/Ads/kijiji.sh
+````
