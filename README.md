@@ -73,6 +73,9 @@ optional arguments:
 
 **Note**: The script stores current ads in `ads.json` file located by default in the config folder `~/.kijiji_scraper/` or `%APPDATA%/.kijiji_scraper`. If a `./ads.json` file exist, it will be loaded
 
+## Mail message example
+![Mail](/mail.png "Mail")
+
 ## How to run the script on set intervals
 
 ### Windows:
