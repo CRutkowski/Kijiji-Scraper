@@ -2,7 +2,7 @@
 ![Build](https://github.com/CRutkowski/Kijiji-Scraper/workflows/Build/badge.svg?branch=master)
 #### Track Kijiji ad information and sends out an email when a new ads are found.
 ## Install
-### Dependencies
+### Requirements
 - **Git** ([Git bash for Windows](https://gitforwindows.org))
 - **Python 3** ([install guide](https://realpython.com/installing-python/))
 
@@ -107,6 +107,13 @@ To search for new ads every 5mn:
 */5 * * * * kijiji --url URL1 URL2 --email me@gmail.com you@gmail.com
 ```
 
+Alternatively, you can use `screen` and launch continuous execution with `watch` command (Linux and MacOS with Homebrew)
+```
+screen -dm watch -n 300 kijiji --url URL --email me@gmail.com you@gmail.com
+```
+
+Use `screen -r`, then Ctrl+C to stop process
+
 ## Running several searches configurations
 
 If you want to share your tech skills with your friends, you need to do an extra step, but it's worth it !  
@@ -137,8 +144,3 @@ kijiji  --email robert@gmail.com --ads /root/Ads/robert-ads.json \
 kijiji  --email laura@gmail.com --ads /root/Ads/lauras-ads.json \
         --url   "URL3"
 ```
-
-```crontab
-# Crontab
-*/10 * * * * /root/Ads/kijiji.sh
-````
