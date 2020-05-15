@@ -120,7 +120,7 @@ Use `screen -r`, then Ctrl+C to stop process
 
 If you want to share your tech skills with your friends, you need to do an extra step, but it's worth it !  
 
-In order to avoid concurrent accesses to ads JSON file and corrupt the file , you'll need to dedicate one file per searches (this WILL happend to you if you don't follow this advise). In the following example, ads matching URL1 will be sent to robert, you and me (because robert is usung a different ads file) - same for URL2 and laura. 
+In order to avoid concurrent accesses to ads JSON file and corrupt the file , you'll need to dedicate one file per searches (this WILL happend to you if you don't follow this advise). In the following example, ads matching URL1 will be sent to robert, you and me (because robert is using a different ads file) - same for URL2 and laura. 
 
 
 ```crontab
