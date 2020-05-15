@@ -104,12 +104,12 @@ The windows `Task Scheduler` can be used to have the script run at set intervals
 Crontab can be used on linux to easily run the script on a set interval.  
 To search for new ads every 5mn: 
 ```
-*/5 * * * * kijiji --url URL1 URL2 --email me@gmail.com you@gmail.com
+*/5 * * * * kijiji --url "URL1" "URL2" --email me@gmail.com you@gmail.com
 ```
 
 Alternatively, you can use `screen` and launch continuous execution with `watch` command (Linux and MacOS with Homebrew)
 ```
-screen -dm watch -n 300 kijiji --url URL --email me@gmail.com you@gmail.com
+screen -dm watch -n 300 kijiji --url "URL1" "URL2" --email me@gmail.com you@gmail.com
 ```
 
 Use `screen -r`, then Ctrl+C to stop process
