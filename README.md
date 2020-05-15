@@ -1,6 +1,8 @@
 # Kijiji-Scraper 3.0.1
-![Build](https://github.com/CRutkowski/Kijiji-Scraper/workflows/Build/badge.svg?branch=master)
+![Build](https://github.com/CRutkowski/Kijiji-Scraper/workflows/Build/badge.svg?branch=master)  
+
 #### Track Kijiji ad information and sends out an email when a new ads are found.
+
 ## Install
 ### Requirements
 - **Git** ([Git bash for Windows](https://gitforwindows.org))
@@ -144,3 +146,6 @@ kijiji  --email robert@gmail.com --ads /root/Ads/robert-ads.json \
 kijiji  --email laura@gmail.com --ads /root/Ads/lauras-ads.json \
         --url   "URL3"
 ```
+
+## See also
+[Craiglist scraper](https://github.com/bth5032/CLscraper)
