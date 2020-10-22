@@ -91,6 +91,13 @@ Crontab can be used on linux to easily run the script on a set interval.
 To search for new ads every 5mn: 
 ```
 */5 * * * * kijiji --url URL1 URL2 --email me@gmail.com you@gmail.com
+
+### MacOS Catalina
+In order for it to work using this command 
+*/5 * * * * /INSERTPATH TO/python3 /Users/USER/main.py
+Change INSERTPATH TO to the python3 path accessed by terminal command which python3
+Change USER to the path directing to main.py file on your computer
+
 ```
 
 ## Running several searches configurations
