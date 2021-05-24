@@ -33,6 +33,9 @@ def main():
         init()
         exit(0)
     
+    if sys.executable.endswith("pythonw.exe"):
+         sys.stdout = open(os.devnull, "w")
+    
     # Handle custom config file
     if args.conf:
         filepath=args.conf
